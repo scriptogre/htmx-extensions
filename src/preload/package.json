@@ -4,6 +4,7 @@
   "homepage": "https://htmx.org/extensions/preload/",
   "main": "dist/preload.esm.js",
   "unpkg": "dist/preload.min.js",
+  "jsdelivr": "dist/preload.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

@@ -3,6 +3,7 @@
   "version": "2.0.1",
   "main": "dist/path-params.esm.js",
   "unpkg": "dist/path-params.min.js",
+  "jsdelivr": "dist/path-params.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

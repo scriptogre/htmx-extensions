@@ -3,6 +3,7 @@
   "version": "2.0.1",
   "main": "dist/event-header.esm.js",
   "unpkg": "dist/event-header.min.js",
+  "jsdelivr": "dist/event-header.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

@@ -3,6 +3,7 @@
   "version": "2.0.2",
   "main": "dist/ajax-header.esm.js",
   "unpkg": "dist/ajax-header.min.js",
+  "jsdelivr": "dist/ajax-header.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

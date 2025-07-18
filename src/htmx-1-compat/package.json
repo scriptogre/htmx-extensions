@@ -4,6 +4,7 @@
   "homepage": "https://htmx.org/extensions/htmx-1-compat/",
   "main": "dist/htmx-1-compat.esm.js",
   "unpkg": "dist/htmx-1-compat.min.js",
+  "jsdelivr": "dist/htmx-1-compat.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

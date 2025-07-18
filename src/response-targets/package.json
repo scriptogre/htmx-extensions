@@ -4,6 +4,7 @@
   "homepage": "https://htmx.org/extensions/response-targets/",
   "main": "dist/response-targets.esm.js",
   "unpkg": "dist/response-targets.min.js",
+  "jsdelivr": "dist/response-targets.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

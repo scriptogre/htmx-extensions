@@ -4,6 +4,7 @@
   "homepage": "https://htmx.org/extensions/ws/",
   "main": "dist/ws.esm.js",
   "unpkg": "dist/ws.min.js",
+  "jsdelivr": "dist/ws.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",
