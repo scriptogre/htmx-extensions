@@ -4,6 +4,7 @@
   "homepage": "https://htmx.org/extensions/head-support/",
   "main": "dist/head-support.esm.js",
   "unpkg": "dist/head-support.min.js",
+  "jsdelivr": "dist/head-support.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

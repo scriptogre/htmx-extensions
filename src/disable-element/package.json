@@ -3,6 +3,7 @@
   "version": "2.0.1",
   "main": "dist/disable-element.esm.js",
   "unpkg": "dist/disable-element.min.js",
+  "jsdelivr": "dist/disable-element.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

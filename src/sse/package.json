@@ -4,6 +4,7 @@
   "homepage": "https://htmx.org/extensions/sse/",
   "main": "dist/sse.esm.js",
   "unpkg": "dist/sse.min.js",
+  "jsdelivr": "dist/sse.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",

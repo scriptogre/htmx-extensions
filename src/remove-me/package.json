@@ -3,6 +3,7 @@
   "version": "2.0.1",
   "main": "dist/remove-me.esm.js",
   "unpkg": "dist/remove-me.min.js",
+  "jsdelivr": "dist/remove-me.min.js",
   "scripts": {
     "lint": "eslint test/ext test",
     "lint-fix": "eslint test/ext test --fix",
