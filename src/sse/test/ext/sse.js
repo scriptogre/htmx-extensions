@@ -702,4 +702,12 @@ describe('sse extension', function() {
     byId('d1').innerHTML.should.equal('div1 updated')
     byId('d2').innerHTML.should.equal('div2 updated')
   })
+
+  it('defaults to message event if sse-swap is not specified', function() {
+    var div = make('<div id="d1" hx-ext="sse" sse-connect="/event_stream"></div>');
+    this.clock.tick(1);
+    byId('d1').innerText.should.equal('');
+    this.eventSource.sendEvent('message', 'Event 1');
+    byId('d1').innerText.should.equal('Event 1');
+  });
 })
