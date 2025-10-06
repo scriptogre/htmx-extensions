@@ -86,7 +86,14 @@ This extension adds support for Server Sent Events to htmx.  See /www/extensions
    */
   function registerSSE(elt) {
   var sseSwapAttr = api.getAttributeValue(elt, 'sse-swap');
-  if (sseSwapAttr === null && api.getAttributeValue(elt, 'sse-connect') !== null) {
+  var sseConnectAttr = api.getAttributeValue(elt, 'sse-connect');
+
+  var hasSseSwap = sseSwapAttr !== null;
+  var hasSseConnect = sseConnectAttr !== null;
+  var hasNestedSseSwap = elt.querySelector('[sse-swap], [data-sse-swap]') !== null;
+
+  if (hasSseConnect && !(hasSseSwap || hasNestedSseSwap)) {
+      // Default `sse-swap` to `message`
       sseSwapAttr = 'message';
   }
 
