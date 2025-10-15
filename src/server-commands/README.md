@@ -1,10 +1,12 @@
 # Server Commands Extension
 
-The `server-commands` extension adds **1 new concept**, the `<htmx>` tag, to enable **server-driven real-time applications**.
+**TL:DR:**
 
-It's only **1.6 KB** (minified + gzipped), and it just works™ with both [sse](https://htmx.org/extensions/sse/) & [ws](https://htmx.org/extensions/ws/) core extensions.
+The `server-commands` extension lets you send `<htmx>` tags from your server to update the DOM. 
 
-It's essentially **out-of-band swaps on steroids**.
+Works with HTTP + [SSE](https://htmx.org/extensions/sse/) & [WebSockets](https://htmx.org/extensions/ws/) extensions.
+
+It's only 1.6 KB minified & gzipped.
 
 <a href="https://bad-apple.christiantanul.com/" target="_blank">
   <img src="img.png" alt="Bad Apple using htmx + sse + server-commands" style="max-width: 100%;">
@@ -14,17 +16,29 @@ It's essentially **out-of-band swaps on steroids**.
 
 ---
 
+
+## Prerequisites
+
+This extension requires htmx with [PR #3425](https://github.com/bigskysoftware/htmx/pull/3425) merged, which exposes history functions to extensions.
+
+Until then, you can test it out with the modified htmx build:
+
+```html
+<script src="https://raw.githack.com/scriptogre/htmx/feature/expose-history-functions/src/htmx.js"></script>
+```
+
+---
+
+
 ## Quick Start Examples
 
 
-### 1. Using `hx-get`/`hx-post` (without Server-Sent Events / WebSockets)
+### 1. Using HTTP (`hx-get`/`hx-post`)
 
 **Client:**
 ```html
 <head>
-    <!-- htmx -->
     <script src="https://raw.githack.com/scriptogre/htmx/feature/expose-history-functions/src/htmx.js"></script>
-    <!-- server-commands -->
     <script src="https://raw.githack.com/scriptogre/htmx-extensions/feature/server-commands/src/server-commands/server-commands.js"></script>
 </head>
 
@@ -34,16 +48,16 @@ It's essentially **out-of-band swaps on steroids**.
         Click Me
     </button>
     
-    <div id="container">
-        Original content
+    <div id="el">
+        Original
     </div>
 
 </body>
 ```
-**Server response (from `/updates`):**
+**Server (from `/updates`):**
 ```html
-<htmx swap="innerHTML" target="#container">
-    Updated content!
+<htmx swap="innerHTML" target="#el">
+    Updated
 </htmx>
 ```
 
@@ -53,11 +67,8 @@ It's essentially **out-of-band swaps on steroids**.
 **Client:**
 ```html
 <head>
-    <!-- htmx -->
     <script src="https://raw.githack.com/scriptogre/htmx/feature/expose-history-functions/src/htmx.js"></script>
-    <!-- server-commands -->
     <script src="https://raw.githack.com/scriptogre/htmx-extensions/feature/server-commands/src/server-commands/server-commands.js"></script>
-    <!-- sse -->
     <script src="https://cdn.jsdelivr.net/npm/htmx-ext-sse@2.2.2"></script>
 </head>
 
@@ -66,7 +77,7 @@ It's essentially **out-of-band swaps on steroids**.
     <div sse-connect="/stream" sse-swap="message" hx-swap="none"></div>  <!-- Connect to /stream using SSE -->
     
     <div id="chat-messages">
-        <!-- Chat messages will be appended here -->
+        <!-- Messages appear here -->
     </div>
 </body>
 ```
@@ -80,8 +91,8 @@ data: </htmx>
 
 **Notes:**
 
-- Set `sse-swap="message"` on any element. Unnamed SSE events are delivered as `message`, so this value is the pass-through that lets your `<htmx>` fragments execute out of band.
-  > When [PR #178](https://github.com/bigskysoftware/htmx-extensions/pull/178) merges, you can omit setting `sse-swap="messages"`, making the setup simpler.
+- Set `sse-swap="message"` on an element. Unnamed SSE events are delivered as `message`, so this value is the pass-through that lets your `<htmx>` fragments execute out of band.
+  > When [PR #178](https://github.com/bigskysoftware/htmx-extensions/pull/178) merges, you can omit setting `sse-swap="message"`, making the setup simpler.
 
 - Set `hx-swap="none"` on the `sse-swap` element to stop the default (main band) swap from clearing the element's content.
   > I’m building a `smart-swaps` extension that will detect out-of-band-only responses and auto-set `hx-swap="none"`, making the setup even simpler.
@@ -92,11 +103,8 @@ data: </htmx>
 **Client:**
 ```html
 <head>
-    <!-- htmx -->
     <script src="https://raw.githack.com/scriptogre/htmx/feature/expose-history-functions/src/htmx.js"></script>
-    <!-- server-commands -->
     <script src="https://raw.githubusercontent.com/scriptogre/htmx-extensions/refs/heads/feature/server-commands/src/server-commands/server-commands.js"></script>
-    <!-- ws -->
     <script src="https://cdn.jsdelivr.net/npm/htmx-ext-ws@2.0.2"></script>
 </head>
 
@@ -109,7 +117,7 @@ data: </htmx>
 </body>
 ```
 
-**WebSocket messages (from `ws://.../ws/stream`):**
+**WebSocket messages (from `/ws/stream`):**
 ```html
 <htmx swap="beforeend show:bottom" target="#chat-messages">
     <div>New message!</div>
@@ -118,7 +126,7 @@ data: </htmx>
 
 ---
 
-## Attributes
+## Attribute Reference
 
 
 ### `target`
@@ -237,7 +245,7 @@ The extension provides the following events that you can hook into:
 - `htmx:serverCommandError`: Fired when an error occurs during command processing.
 
 ```html
-<!-- HTTP Response Example -->
+<!-- HTTP Example -->
 <button hx-get="/updates"
         hx-swap="none"
         hx-on::before-server-command="event.preventDefault()"  <!-- Cancel processing -->
@@ -262,7 +270,7 @@ The extension provides the following events that you can hook into:
 </div>
 ```
 
-Swaps done via `<htmx>` commands also trigger the standard htmx events (like `htmx:beforeSwap`, `htmx:afterSwap`, etc).
+Swaps done via `<htmx>` commands also trigger the standard htmx events (like `htmx:beforeSwap`, `htmx:afterSwap`, etc) on the target elements.
 
 ---
 
@@ -288,24 +296,6 @@ The `<htmx>` tag could potentially support new commands, like:
 The `<htmx>` tag provides an API to do surgical updates upon the DOM, directly from the server.
 
 ---
-
-## FAQ
-
-### Why the modified version of htmx?
-
-The extension relies heavily on internal htmx functions to provide full support for htmx features.
-
-However, the history-related internal functions are not yet exposed to extensions.
-
-I created a [PR](https://github.com/bigskysoftware/htmx/pull/3425) to expose them. Feel free to upvote / comment to bring more attention to it.
-
-Until then, here's a modified version of htmx:
-
-```html
-<script src="https://raw.githack.com/scriptogre/htmx/feature/expose-history-functions/src/htmx.js"></script>
-```
-
-All it does is expose the 4 internal functions needed by the extension.
 
 ## Experimental Notice
 
